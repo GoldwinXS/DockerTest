@@ -1,9 +1,19 @@
 FROM python:3.7
 
-RUN mkdir /testapp
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /mkdir
+RUN mkdir code/
 
-ADD testsite/testsite .
+WORKDIR code/
 
-RUN pip install -r requirements.txt
+COPY testsite/ code/
+
+COPY requirements.txt code/
+
+EXPOSE 8000
+
+RUN pip install -r code/requirements.txt
+
+CMD [ "python", "./code/manage.py", "runserver", "0.0.0.0:8000"]
