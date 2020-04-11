@@ -17,7 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from myapp import views
 
+app_name = 'myapp'
+
 urlpatterns = [
+    path('image_receive', views.image_receive, name='image_receive'),
     path('admin/', admin.site.urls),
-    path('', views.index, name="index")
+    path('', views.index, name="index"),
+    path('register', views.register, name='register'),
+    path('user_login', views.user_login, name='user_login'),
+    path('ml_model', views.ml_model, name='ml_model')
 ]

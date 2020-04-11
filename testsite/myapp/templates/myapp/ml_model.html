@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="js/scripts.js"></script>
+
+<video autoplay></video>
+<!--<input type="file" name="video" accept="video/*" capture="environment">-->
+<script>
+
+    const constraints = {video: true};
+
+    const video = document.querySelector('video');
+
+    navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+        video.srcObject = stream
+    });
+
+
+    $.ajax({
+        method: "POST",
+        url: "{% url 'image_receive' %}",
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        contentType: "application/json",
+        dataType: 'json',
+        data: {name: $('#id_name').val()}
+    })
+        .fail(function (message) {
+            alert('error');
+        })
+        .done(function (data) {
+            alert(data);
+        });
+
+    // $.ajax({
+    //     url: '/videofeed/$',
+    //     type: 'POST',
+    //     data: {stream: stream},
+    //     success: function (response) {
+    //     },
+    //     complete: function () {
+    //     },
+    //     error: function (xhr, textStatus, thrownError) {
+    //     }
+    //
+    //
+    // });
+
+    // const constraints = {video: true};
+    //
+    // const video = document.querySelector('video');
+    //
+    // navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+    //     video.srcObject = stream
+    // });
+
+
+</script>
+
+
+</body>
+</html>

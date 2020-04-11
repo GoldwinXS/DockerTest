@@ -16,4 +16,6 @@ EXPOSE 8000
 
 RUN pip install -r code/requirements.txt
 
-CMD [ "python", "./code/manage.py", "runserver", "0.0.0.0:8000"]
+CMD python ./code/manage.py runserver 0.0.0.0:$PORT
+
+# gcr.io/testapp-273803/testapp

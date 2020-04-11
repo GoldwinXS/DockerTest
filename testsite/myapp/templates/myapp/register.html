@@ -1,0 +1,23 @@
+{% extends "myapp/header.html" %}
+
+{% block content %}
+<br>
+<br>
+
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <br>
+
+        <br>
+        <button class="btn" style="background-color: tomato" type="submit">register</button>
+    </form>
+    <br>
+
+    <a href="/login" style="font-size: 60%"> If you already have an account, <strong>login</strong> instead... </a>
+</div>
+
+
+{% endblock %}

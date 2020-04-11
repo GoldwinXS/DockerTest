@@ -19,3 +19,8 @@ class Test(models.Model):
 
     def __str__(self):
         return self.test_title
+
+
+class MLMODEL(models.Model):
+    vars = models.IntegerField()
+
