@@ -1,67 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "myapp/header.html" %}
+{% block content %}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="js/scripts.js"></script>
+<video class="videostream" id="video-stream" autoplay></video>
 
-<video autoplay></video>
-<!--<input type="file" name="video" accept="video/*" capture="environment">-->
+
+<div id="screenshot">
+    <button class="btn" id="screenshot-button" style="background-color: #6fff90" type="submit">Screen Shot</button>
+<!--    <canvas id="canvas"></canvas>-->
+<!--    <img id="screenshot-img" src="">-->
+</div>
+
+
+{% block javascript %}
+
 <script>
 
+    // define some constants and get some elements from the DOM
     const constraints = {video: true};
-
+    const button = document.querySelector('#screenshot-button');
+    const img = document.querySelector('#screenshot-img');
     const video = document.querySelector('video');
+    const canvas = document.createElement("canvas");
 
+    // start video feed
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
         video.srcObject = stream
     });
 
+    // bind the button with the event listener
+    button.addEventListener("click", function () {
+        canvas.width = video.videoWidth; // assign canvas w and h
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        // img.src = canvas.toDataURL('image/webp'); // get base64 png and assign to img for now
 
-    $.ajax({
-        method: "POST",
-        url: "{% url 'image_receive' %}",
-        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-        contentType: "application/json",
-        dataType: 'json',
-        data: {name: $('#id_name').val()}
-    })
-        .fail(function (message) {
-            alert('error');
-        })
-        .done(function (data) {
-            alert(data);
-        });
-
-    // $.ajax({
-    //     url: '/videofeed/$',
-    //     type: 'POST',
-    //     data: {stream: stream},
-    //     success: function (response) {
-    //     },
-    //     complete: function () {
-    //     },
-    //     error: function (xhr, textStatus, thrownError) {
-    //     }
-    //
-    //
-    // });
-
-    // const constraints = {video: true};
-    //
-    // const video = document.querySelector('video');
-    //
-    // navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-    //     video.srcObject = stream
-    // });
+        // return the data to the server with a post request. N.B.: that the csrf middleware token must be added for Django
+        $.post({url: "/image_receive", data: {image: canvas.toDataURL('image/webp'), "csrfmiddlewaretoken": "{{csrf_token}}"}})
+    });
 
 
 </script>
 
-
-</body>
-</html>
+{% endblock javascript %}
+{% endblock %}
