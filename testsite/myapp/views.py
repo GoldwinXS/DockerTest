@@ -29,6 +29,7 @@ def image_receive(request):
             f.write(data)
 
         detect_from_image()
+
     return HttpResponse('hi?')
 
 
@@ -37,14 +38,29 @@ class PersistentML():
         self.model = ML_Model()
         self.session = K.get_session()
 
+from tensorflow.python.keras.backend import set_session
+from tensorflow.python.keras.models import load_model
+
+# tf_config = some_custom_config
+graph = tf.get_default_graph()
+sess = K.get_session()
+from tensorflow.python.keras.backend import set_session
+
+set_session(sess)
 
 per_ml = PersistentML()
 
 
-def detect_from_image():
-    img = cv2.imread('myapp/image.png')
 
-    out_img = per_ml.model.predict_on_image(img)
+def detect_from_image():
+
+
+    img = cv2.imread('myapp/image.png')
+    # sess = K.get_session()
+    # with per_ml.session:
+    with graph.as_default():
+        set_session(set_session)
+        out_img = per_ml.model.predict_on_image(img)
     cv2.imwrite('out.png', out_img)
 
 

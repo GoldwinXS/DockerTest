@@ -247,7 +247,6 @@ class ML_Model():
     def get_boxes_from_inference(self, image):
 
         model_input, h, w = self.prepare_image(image)
-        # print(model_input)
         yhat = self.model.predict(model_input)
 
         # summarize the shape of the list of arrays
@@ -309,7 +308,6 @@ class ML_Model():
         frame = self.draw_results_on_frame(image, boxes, labels, scores)
         return frame
 
-# cv_model = ML_Model('trained_weights_final.h5')
 # ml = ML_Model()
 # img = cv2.imread('image.png')
 # out = ml.predict_on_image(img)
