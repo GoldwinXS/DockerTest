@@ -31,7 +31,7 @@ SECRET_KEY = 'xkaa!6*i=1vrph@c7)8wv1mtc!rie0qoi#_jf-+yu+fs8#bd^@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["testapp-nplcul4mma-ue.a.run.app", '127.0.0.1']
+ALLOWED_HOSTS = ["testapp-nplcul4mma-ue.a.run.app", '127.0.0.1', '0.0.0.0']
 
 # Application definition
 
