@@ -1,10 +1,34 @@
 {% extends "myapp/header.html" %}
 
 {% block content %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
 <div class="container">
     <h1>This page is under construction! <br><br>...<br><br> Please come back later! </h1>
 
     <br>
+
+    <button class="btn" onsubmit="" id="button1">Click to test.</button>
+
+    <script>
+
+        const button = document.querySelector('#button1');
+
+        button.addEventListener("click", function () {
+            // img.src = canvas.toDataURL('image/webp'); // get base64 png and assign to img for now
+
+            // return the data to the server with a post request. N.B.: that the csrf middleware token must be added for Django
+            $.post({
+                url: "/ajax_call/data_receive/",
+                data: {image: 'image', "csrfmiddlewaretoken": "{{csrf_token}}"},
+                function () {alert('POST request was sent')}
+            })
+        });
+
+    </script>
+
 
     <a href="/">Back Home</a>
 

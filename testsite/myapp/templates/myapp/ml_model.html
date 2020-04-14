@@ -8,8 +8,8 @@
 
 <div id="screenshot">
     <button class="btn" id="screenshot-button" style="background-color: #6fff90" type="submit">Screen Shot</button>
-<!--    <canvas id="canvas"></canvas>-->
-<!--    <img id="screenshot-img" src="">-->
+    <!--    <canvas id="canvas"></canvas>-->
+    <!--    <img id="screenshot-img" src="">-->
 </div>
 
 
@@ -37,7 +37,10 @@
         // img.src = canvas.toDataURL('image/webp'); // get base64 png and assign to img for now
 
         // return the data to the server with a post request. N.B.: that the csrf middleware token must be added for Django
-        $.post({url: "/image_receive", data: {image: canvas.toDataURL('image/webp'), "csrfmiddlewaretoken": "{{csrf_token}}"}})
+        $.post({
+            url: "/image_receive",
+            data: {image: canvas.toDataURL('image/webp'), "csrfmiddlewaretoken": "{{csrf_token}}"}
+        })
     });
 
 

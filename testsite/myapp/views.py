@@ -4,18 +4,24 @@ from .models import Test
 from django.contrib.auth import login, logout, authenticate
 from .models import MLMODEL
 from django.http import HttpResponse
-
+from .celery_requester import make_request
 
 
 # Create your views here.
+
+def data_receive(request):
+    print('view activated from AJAX call')
+    print(request)
+    if request.method == 'POST':
+        make_request()
+    else:
+        return HttpResponse('done')
 
 
 def image_receive(request):
     print('view activated from AJAX call')
     if request.method == 'POST':
         image = request.POST.get('image')
-        print('received... something')
-
         from base64 import b64decode
 
         data_uri = image

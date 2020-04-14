@@ -12,10 +12,14 @@ COPY testsite/ code/
 
 COPY requirements.txt code/
 
+# needed to be open to the web
 EXPOSE 8000
+
+# needed to communicate with rabbit mq server
+EXPOSE 5672
 
 RUN pip install -r code/requirements.txt
 
 CMD python ./code/manage.py runserver 0.0.0.0:8000
 
-# gcr.io/testapp-273803/testapp
+# google cloud run url: gcr.io/testapp-273803/testapp
